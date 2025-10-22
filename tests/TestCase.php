@@ -2,6 +2,7 @@
 
 namespace GitItWrite\Tests;
 
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Brain\Monkey;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 
@@ -10,6 +11,8 @@ use PHPUnit\Framework\TestCase as PHPUnitTestCase;
  */
 abstract class TestCase extends PHPUnitTestCase
 {
+    use MockeryPHPUnitIntegration;
+
     /**
      * Setup test environment
      */
@@ -31,6 +34,9 @@ abstract class TestCase extends PHPUnitTestCase
             },
             'get_option' => function($option, $default = false) {
                 return $default;
+            },
+            'update_option' => function($option, $value) {
+                return true;
             },
             'wp_parse_args' => function($args, $defaults = array()) {
                 if (is_object($args)) {
@@ -54,6 +60,13 @@ abstract class TestCase extends PHPUnitTestCase
             },
             'esc_url' => function($url) {
                 return htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
+            },
+            'selected' => function($selected, $current, $echo = true) {
+                $result = $selected == $current ? ' selected="selected"' : '';
+                if ($echo) {
+                    echo $result;
+                }
+                return $result;
             },
         ]);
     }

@@ -14,8 +14,6 @@ class GitItWriteTest extends TestCase
      */
     public function testDefaultConfig()
     {
-        require_once dirname(__DIR__) . '/git-it-write.php';
-
         $config = \Git_It_Write::default_config();
 
         $this->assertIsArray($config);
@@ -44,8 +42,6 @@ class GitItWriteTest extends TestCase
      */
     public function testDefaultGeneralSettings()
     {
-        require_once dirname(__DIR__) . '/git-it-write.php';
-
         $settings = \Git_It_Write::default_general_settings();
 
         $this->assertIsArray($settings);
@@ -64,8 +60,6 @@ class GitItWriteTest extends TestCase
      */
     public function testAllowedFileTypes()
     {
-        require_once dirname(__DIR__) . '/git-it-write.php';
-
         $types = \Git_It_Write::allowed_file_types();
 
         $this->assertIsArray($types);
@@ -77,8 +71,6 @@ class GitItWriteTest extends TestCase
      */
     public function testAllRepositoriesWithEmptyData()
     {
-        require_once dirname(__DIR__) . '/git-it-write.php';
-
         Functions\expect('get_option')
             ->once()
             ->with('giw_repositories', [[]])
@@ -95,8 +87,6 @@ class GitItWriteTest extends TestCase
      */
     public function testGeneralSettingsRetrieval()
     {
-        require_once dirname(__DIR__) . '/git-it-write.php';
-
         Functions\expect('get_option')
             ->once()
             ->with('giw_general_settings', [])

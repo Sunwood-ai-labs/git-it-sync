@@ -6,9 +6,6 @@
 // Composer autoload
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-// Load Brain Monkey for WordPress mocking
-require_once dirname(__DIR__) . '/vendor/antecedent/patchwork/Patchwork.php';
-
 // Define plugin constants for testing
 if (!defined('GIW_VERSION')) {
     define('GIW_VERSION', '2.0');
@@ -22,5 +19,6 @@ if (!defined('GIW_ADMIN_URL')) {
     define('GIW_ADMIN_URL', 'http://example.com/wp-content/plugins/git-it-write/admin/');
 }
 
-// Start Brain Monkey
-\Brain\Monkey\setUp();
+if (!defined('ABSPATH')) {
+    define('ABSPATH', '/tmp/wordpress/');
+}

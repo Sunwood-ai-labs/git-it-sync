@@ -45,7 +45,7 @@ jobs:
             ${{ runner.os }}-php-${{ matrix.php }}-composer-
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+        run: composer update --prefer-dist --no-progress
 
       - name: Check PHP syntax errors
         run: find . -name "*.php" -not -path "./vendor/*" -not -path "./tests/*" -exec php -l {} \;
@@ -80,7 +80,7 @@ jobs:
           tools: composer:v2
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+        run: composer update --prefer-dist --no-progress
 
       - name: Check for PHP syntax errors
         run: find . -name "*.php" -not -path "./vendor/*" -exec php -l {} \;

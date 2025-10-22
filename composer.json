@@ -1,4 +1,16 @@
 {
+    "name": "aakashweb/git-it-write",
+    "description": "WordPress plugin to publish markdown files present in a Github repository as posts to WordPress automatically",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Aakash Chakravarthy",
+            "homepage": "https://www.aakashweb.com/"
+        }
+    ],
+    "homepage": "https://www.aakashweb.com/wordpress-plugins/git-it-write/",
+    "keywords": ["wordpress", "plugin", "github", "markdown", "git"],
     "require": {
         "php": ">=7.4",
         "erusev/parsedown": "^1.7",

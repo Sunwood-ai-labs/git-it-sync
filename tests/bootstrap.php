@@ -1,6 +1,6 @@
 <?php
 /**
- * PHPUnit bootstrap file for Git It Write plugin tests
+ * PHPUnit bootstrap file for Git It Sync plugin tests
  */
 
 // Composer autoload

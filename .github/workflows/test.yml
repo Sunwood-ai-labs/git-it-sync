@@ -1,4 +1,4 @@
-name: WordPress Plugin Tests
+name: Git It Sync Tests
 
 on:
   push:

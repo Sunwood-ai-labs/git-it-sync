@@ -2,8 +2,10 @@
 
 namespace GitItWrite\Tests;
 
+use PHPUnit\Framework\TestCase;
+
 /**
- * Simple basic tests for Git It Write plugin
+ * Simple basic tests for Git It Sync plugin
  */
 class GitItWriteTest extends TestCase
 {

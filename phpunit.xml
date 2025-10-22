@@ -12,7 +12,7 @@
          verbose="true"
          colors="true">
     <testsuites>
-        <testsuite name="Git It Write Test Suite">
+        <testsuite name="Git It Sync Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

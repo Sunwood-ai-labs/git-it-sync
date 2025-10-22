@@ -1,6 +1,6 @@
 {
-    "name": "aakashweb/git-it-write",
-    "description": "WordPress plugin to publish markdown files present in a Github repository as posts to WordPress automatically",
+    "name": "sunwood-ai-labs/git-it-sync",
+    "description": "WordPress plugin to publish markdown files present in a Github repository as posts to WordPress automatically (git-it-sync fork)",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
     "authors": [
@@ -9,7 +9,7 @@
             "homepage": "https://www.aakashweb.com/"
         }
     ],
-    "homepage": "https://www.aakashweb.com/wordpress-plugins/git-it-write/",
+    "homepage": "https://github.com/Sunwood-ai-labs/git-it-sync",
     "keywords": ["wordpress", "plugin", "github", "markdown", "git"],
     "require": {
         "php": ">=7.4",

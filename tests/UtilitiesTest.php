@@ -2,6 +2,8 @@
 
 namespace GitItWrite\Tests;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Simple tests for utility functions
  */

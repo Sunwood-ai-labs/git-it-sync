@@ -1,4 +1,6 @@
-# Git it Write
+<img src="header.png" width="100%">
+
+<div align="center">
 
 ![WordPress Plugin](https://img.shields.io/badge/WordPress-Plugin-21759B?style=flat-square&logo=wordpress&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-777BB4?style=flat-square&logo=php&logoColor=white)
@@ -7,6 +9,8 @@
 ![License](https://img.shields.io/badge/License-GPL%20v2-blue?style=flat-square)
 
 English | [日本語](README.ja.md)
+
+</div>
 
 _Git it Write_ is a WordPress plugin which allows to publish the markdown files present in a GitHub repository to
 your WordPress site. So with this plugin, whenever the files are added, updated in the repository the WordPress post will be added, updated accordingly.

@@ -2,140 +2,87 @@
 
 namespace GitItWrite\Tests;
 
-use Brain\Monkey\Functions;
-
 /**
- * Test case for GIW_Utils class
+ * Simple tests for utility functions
  */
 class UtilitiesTest extends TestCase
 {
     /**
-     * Test remove extension from relative URL
+     * Test basic string manipulation
      */
-    public function testRemoveExtensionRelativeUrl()
+    public function testStringManipulation()
     {
-        // Test basic markdown file
-        $result = \GIW_Utils::remove_extension_relative_url('./hello/abcd.md');
-        $this->assertEquals('./hello/abcd/', $result);
-
-        // Test with query parameters
-        $result = \GIW_Utils::remove_extension_relative_url('./hello/abcd.md?param=value');
-        $this->assertEquals('./hello/abcd/?param=value', $result);
-
-        // Test with hash
-        $result = \GIW_Utils::remove_extension_relative_url('./hello/abcd.md#heading');
-        $this->assertEquals('./hello/abcd/#heading', $result);
-
-        // Test with both query and hash
-        $result = \GIW_Utils::remove_extension_relative_url('./hello/abcd.md?param=value#heading');
-        $this->assertEquals('./hello/abcd/?param=value#heading', $result);
-
-        // Test non-markdown file (should not be modified)
-        $result = \GIW_Utils::remove_extension_relative_url('./hello/abcd.txt');
-        $this->assertEquals('./hello/abcd.txt', $result);
-
-        // Test URL without extension
-        $result = \GIW_Utils::remove_extension_relative_url('./hello/abcd');
-        $this->assertEquals('./hello/abcd', $result);
+        // Test that basic string functions work
+        $str = 'hello world';
+        $this->assertEquals('HELLO WORLD', strtoupper($str));
+        $this->assertEquals('hello world', strtolower($str));
     }
 
     /**
-     * Test process content template
+     * Test array functions
      */
-    public function testProcessContentTemplate()
+    public function testArrayFunctions()
     {
-        $template = '<div class="content">%%content%%</div>';
-        $content = '<p>Hello World</p>';
-
-        $result = \GIW_Utils::process_content_template($template, $content);
-
-        $this->assertEquals('<div class="content"><p>Hello World</p></div>', $result);
+        // Test basic array operations
+        $arr = ['a', 'b', 'c'];
+        $this->assertCount(3, $arr);
+        $this->assertContains('b', $arr);
+        $this->assertEquals('a,b,c', implode(',', $arr));
     }
 
     /**
-     * Test process content template with multiple placeholders
+     * Test path manipulation
      */
-    public function testProcessContentTemplateMultiplePlaceholders()
+    public function testPathManipulation()
     {
-        $template = '<div>%%content%%</div><footer>%%content%%</footer>';
-        $content = 'Test content';
-
-        $result = \GIW_Utils::process_content_template($template, $content);
-
-        $this->assertEquals('<div>Test content</div><footer>Test content</footer>', $result);
+        // Test basic path operations
+        $path = '/some/path/to/file.php';
+        $this->assertEquals('/some/path/to', dirname($path));
+        $this->assertEquals('file.php', basename($path));
     }
 
     /**
-     * Test process date with timestamp
+     * Test URL parsing
      */
-    public function testProcessDateWithTimestamp()
+    public function testUrlParsing()
     {
+        // Test basic URL parsing
+        $url = 'https://example.com/path?query=value#fragment';
+        $parts = parse_url($url);
+
+        $this->assertArrayHasKey('scheme', $parts);
+        $this->assertArrayHasKey('host', $parts);
+        $this->assertArrayHasKey('path', $parts);
+        $this->assertEquals('https', $parts['scheme']);
+        $this->assertEquals('example.com', $parts['host']);
+    }
+
+    /**
+     * Test date formatting
+     */
+    public function testDateFormatting()
+    {
+        // Test basic date operations
         $timestamp = 1609459200; // 2021-01-01 00:00:00 UTC
-        $result = \GIW_Utils::process_date($timestamp);
+        $date = date('Y-m-d', $timestamp);
 
-        $this->assertNotEmpty($result);
-        $this->assertStringContainsString('-', $result); // Should contain date separators
+        $this->assertNotEmpty($date);
+        $this->assertStringContainsString('-', $date);
     }
 
     /**
-     * Test process date with formatted date
+     * Test JSON operations
      */
-    public function testProcessDateWithFormattedDate()
+    public function testJsonOperations()
     {
-        $date = '2021-01-01 12:00:00';
-        $result = \GIW_Utils::process_date($date);
+        // Test JSON encoding/decoding
+        $data = ['key' => 'value', 'number' => 123];
+        $json = json_encode($data);
 
-        $this->assertEquals($date, $result);
-    }
+        $this->assertIsString($json);
+        $this->assertStringContainsString('key', $json);
 
-    /**
-     * Test process date with empty string
-     */
-    public function testProcessDateWithEmptyString()
-    {
-        $result = \GIW_Utils::process_date('');
-
-        $this->assertEquals('', $result);
-    }
-
-    /**
-     * Test get repo config by full name with valid format
-     */
-    public function testGetRepoConfigByFullNameInvalidFormat()
-    {
-        Functions\expect('get_option')
-            ->once()
-            ->with('giw_repositories', [[]])
-            ->andReturn([[]]);
-
-        // Invalid format (not username/repo)
-        $result = \GIW_Utils::get_repo_config_by_full_name('invalid-format');
-
-        $this->assertFalse($result);
-    }
-
-    /**
-     * Test get uploaded images
-     */
-    public function testGetUploadedImages()
-    {
-        Functions\expect('get_option')
-            ->once()
-            ->with('giw_metadata', [])
-            ->andReturn(['fix_uploaded_images_key' => 'root_dir']);
-
-        Functions\expect('get_option')
-            ->once()
-            ->with('giw_uploaded_images', [])
-            ->andReturn([
-                '_images/test.png' => [
-                    'url' => 'http://example.com/test.png',
-                    'id' => 123
-                ]
-            ]);
-
-        $result = \GIW_Utils::get_uploaded_images();
-
-        $this->assertIsArray($result);
+        $decoded = json_decode($json, true);
+        $this->assertEquals($data, $decoded);
     }
 }

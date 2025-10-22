@@ -1,6 +1,6 @@
 <img src="header.png" width="100%">
 
-<div align="center">
+<div style="text-align: center;">
 
 ![WordPress Plugin](https://img.shields.io/badge/WordPress-Plugin-21759B?style=flat-square&logo=wordpress&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-777BB4?style=flat-square&logo=php&logoColor=white)

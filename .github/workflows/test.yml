@@ -1,0 +1,103 @@
+name: WordPress Plugin Tests
+
+on:
+  push:
+    branches: [ main, master, develop, 'claude/**' ]
+  pull_request:
+    branches: [ main, master, develop ]
+
+jobs:
+  test:
+    name: PHP ${{ matrix.php }} - WordPress ${{ matrix.wordpress }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['7.4', '8.0', '8.1', '8.2']
+        wordpress: ['6.0', '6.2', '6.4', 'latest']
+        exclude:
+          # Exclude incompatible combinations if needed
+          - php: '7.4'
+            wordpress: 'latest'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd
+          coverage: xdebug
+          tools: composer:v2
+
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ matrix.php }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-${{ matrix.php }}-composer-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Check PHP syntax errors
+        run: find . -name "*.php" -not -path "./vendor/*" -not -path "./tests/*" -exec php -l {} \;
+
+      - name: Run PHPUnit tests
+        run: composer test
+
+      - name: Generate code coverage report
+        if: matrix.php == '8.1' && matrix.wordpress == 'latest'
+        run: composer test:coverage
+
+      - name: Upload coverage to Codecov
+        if: matrix.php == '8.1' && matrix.wordpress == 'latest'
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/clover.xml
+          flags: unittests
+          name: codecov-umbrella
+
+  code-quality:
+    name: Code Quality Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Check for PHP syntax errors
+        run: find . -name "*.php" -not -path "./vendor/*" -exec php -l {} \;
+
+      - name: Validate plugin structure
+        run: |
+          if [ ! -f "git-it-write.php" ]; then
+            echo "Main plugin file not found!"
+            exit 1
+          fi
+          echo "Plugin structure is valid"
+
+      - name: Check for TODO and FIXME comments
+        run: |
+          if grep -r "TODO\|FIXME" --include="*.php" --exclude-dir=vendor .; then
+            echo "Found TODO or FIXME comments - consider addressing them"
+          else
+            echo "No TODO or FIXME comments found"
+          fi
+        continue-on-error: true

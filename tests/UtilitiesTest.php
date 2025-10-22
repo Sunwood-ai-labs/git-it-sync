@@ -14,9 +14,6 @@ class UtilitiesTest extends TestCase
      */
     public function testRemoveExtensionRelativeUrl()
     {
-        require_once dirname(__DIR__) . '/git-it-write.php';
-        require_once dirname(__DIR__) . '/includes/utilities.php';
-
         // Test basic markdown file
         $result = \GIW_Utils::remove_extension_relative_url('./hello/abcd.md');
         $this->assertEquals('./hello/abcd/', $result);
@@ -47,8 +44,6 @@ class UtilitiesTest extends TestCase
      */
     public function testProcessContentTemplate()
     {
-        require_once dirname(__DIR__) . '/includes/utilities.php';
-
         $template = '<div class="content">%%content%%</div>';
         $content = '<p>Hello World</p>';
 
@@ -62,8 +57,6 @@ class UtilitiesTest extends TestCase
      */
     public function testProcessContentTemplateMultiplePlaceholders()
     {
-        require_once dirname(__DIR__) . '/includes/utilities.php';
-
         $template = '<div>%%content%%</div><footer>%%content%%</footer>';
         $content = 'Test content';
 
@@ -77,8 +70,6 @@ class UtilitiesTest extends TestCase
      */
     public function testProcessDateWithTimestamp()
     {
-        require_once dirname(__DIR__) . '/includes/utilities.php';
-
         $timestamp = 1609459200; // 2021-01-01 00:00:00 UTC
         $result = \GIW_Utils::process_date($timestamp);
 
@@ -91,8 +82,6 @@ class UtilitiesTest extends TestCase
      */
     public function testProcessDateWithFormattedDate()
     {
-        require_once dirname(__DIR__) . '/includes/utilities.php';
-
         $date = '2021-01-01 12:00:00';
         $result = \GIW_Utils::process_date($date);
 
@@ -104,8 +93,6 @@ class UtilitiesTest extends TestCase
      */
     public function testProcessDateWithEmptyString()
     {
-        require_once dirname(__DIR__) . '/includes/utilities.php';
-
         $result = \GIW_Utils::process_date('');
 
         $this->assertEquals('', $result);
@@ -116,9 +103,6 @@ class UtilitiesTest extends TestCase
      */
     public function testGetRepoConfigByFullNameInvalidFormat()
     {
-        require_once dirname(__DIR__) . '/git-it-write.php';
-        require_once dirname(__DIR__) . '/includes/utilities.php';
-
         Functions\expect('get_option')
             ->once()
             ->with('giw_repositories', [[]])
@@ -135,8 +119,6 @@ class UtilitiesTest extends TestCase
      */
     public function testGetUploadedImages()
     {
-        require_once dirname(__DIR__) . '/includes/utilities.php';
-
         Functions\expect('get_option')
             ->once()
             ->with('giw_metadata', [])

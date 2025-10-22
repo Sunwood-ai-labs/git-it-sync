@@ -24,13 +24,7 @@
         "mockery/mockery": "^1.5"
     },
     "autoload": {
-        "classmap": [
-            "includes/",
-            "admin/"
-        ],
-        "files": [
-            "git-it-write.php"
-        ]
+        "classmap": []
     },
     "autoload-dev": {
         "psr-4": {
